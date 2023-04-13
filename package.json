@@ -1,0 +1,20 @@
+{
+  "name": "Hope-Bot",
+  "version": "1.0.0",
+  "description": "Um bot simples feito para o servidor Hope de GTA RP",
+  "main": "src/index.js",
+  "repository": "https://github.com/biancadcastro/Hope-Bot.git",
+  "author": {
+    "name": "Bianca de Castro",
+    "email": "biancadcastro@gmail.com"
+  },
+  "license": "See license in LICENSE",
+  "private": false,
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "discord.js": "^14.9.0"
+  }
+}
