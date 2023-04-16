@@ -15,6 +15,8 @@ module.exports = async (client) => {
             const command = require(`../commands/${file}`)
 
             if (command && command.data.name) {
+                if ( commands.length >= commandsData.length) continue
+                
                 client.slashCommands.set(command.data.name, command);
 
                 commands.push(command.data);
