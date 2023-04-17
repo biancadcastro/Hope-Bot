@@ -192,10 +192,6 @@ async function closeTicket(client, interaction) {
 
     if (!role) return interaction.deferUpdate()
 
-    const hopeGuild = await client.guilds.fetch("789331367426261053")
-
-    // const channel = await hopeGuild.channels.cache.find(channel => channel.topic == interaction.user.id && channel.id == interaction.channel.id)
-
     const closedTicketEmbed = new EmbedBuilder()
         .setColor(client.themes.default)
         .setTitle("Ticket fechado")
@@ -265,10 +261,6 @@ async function archiveTicket(client, interaction) {
 
     if (!role) return interaction.deferUpdate()
 
-    const hopeGuild = await client.guilds.fetch("789331367426261053")
-
-    const channel = await hopeGuild.channels.cache.find(channel => channel.topic == interaction.user.id && channel.id == interaction.channel.id)
-
     const archivedTicketEmbed = new EmbedBuilder()
         .setColor(client.themes.default)
         .setTitle("Ticket arquivado")
@@ -285,11 +277,11 @@ async function archiveTicket(client, interaction) {
                 .setDisabled(true)
         )
 
-    channel.send({embeds: [archivedTicketEmbed], components: [archivedTicketRow]})
+    interaction.channel.send({embeds: [archivedTicketEmbed], components: [archivedTicketRow]})
 
     await interaction.channel.setParent("1097137840539844608")
 
-    await channel.permissionOverwrites.set([
+    await interaction.send.permissionOverwrites.set([
         {
             id: "789331367426261053",
             deny: [PermissionsBitField.Flags.ViewChannel]
