@@ -194,7 +194,7 @@ async function closeTicket(client, interaction) {
 
     const hopeGuild = await client.guilds.fetch("789331367426261053")
 
-    const channel = await hopeGuild.channels.cache.find(channel => channel.topic == interaction.user.id && channel.id == interaction.channel.id)
+    // const channel = await hopeGuild.channels.cache.find(channel => channel.topic == interaction.user.id && channel.id == interaction.channel.id)
 
     const closedTicketEmbed = new EmbedBuilder()
         .setColor(client.themes.default)
@@ -212,11 +212,11 @@ async function closeTicket(client, interaction) {
                 .setDisabled(true)
         )
 
-    channel.send({embeds: [closedTicketEmbed], components: [ClosedTicketRow]})
+    interaction.channel.send({embeds: [closedTicketEmbed], components: [ClosedTicketRow]})
 
     await interaction.channel.setParent("1097137803357331466")
 
-    await channel.permissionOverwrites.set([
+    await interaction.channel.permissionOverwrites.set([
         {
             id: "789331367426261053",
             deny: [PermissionsBitField.Flags.ViewChannel]
