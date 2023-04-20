@@ -1,4 +1,5 @@
 const { selectTicketTopic, createNewTicketTopic, closeTicket, archiveTicket } = require("../modules/functions/tickets");
+const { CreateNewWhitelist, CreateWhitelistChannel } = require("../modules/functions/whiteList");
 
 module.exports = {
 
@@ -16,6 +17,8 @@ module.exports = {
         if (interaction.isButton()) {
             const { customId } = interaction
 
+            console.log(customId)
+
             if ( customId == "open_new_ticket") return selectTicketTopic(client, interaction)
 
             if ( customId == "close_ticket_button" ) return closeTicket(client, interaction)
@@ -23,6 +26,8 @@ module.exports = {
             if ( customId == "add_user_to_ticket" ) return
 
             if ( customId == "archive_ticket" ) return  archiveTicket(client, interaction)
+
+            if ( customId == "open_new_wl" ) return CreateNewWhitelist(client, interaction)
         }
         
         //mensagem
@@ -36,6 +41,13 @@ module.exports = {
             return setTimeout(() => {
                 interaction.deleteReply().catch(() => null)
             }, 1000 * 60 * 10)
+        }
+
+        //modal
+        if (interaction.isModalSubmit()) {
+            const { customId } = interaction
+
+            if ( customId == "new_whitelist_modal" ) return CreateWhitelistChannel(client, interaction)
         }
 
     },
