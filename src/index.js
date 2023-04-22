@@ -6,7 +6,7 @@ require("dotenv").config()
 
 require("dotenv").config()
 
-const client = new Bot({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages] })
+const client = new Bot({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildMembers] })
 
 module.exports = client
 
