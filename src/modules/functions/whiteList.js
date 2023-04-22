@@ -72,28 +72,31 @@ async function CreateWhitelistChannel(client, interaction) {
     const personName = interaction.fields.getTextInputValue('person_name_input');
     const personAge = interaction.fields.getTextInputValue('person_age_input');
 
-    console.log(!isNaN(fivemId))
-    console.log(userName)
-    console.log(!isNaN(userAge))
-    console.log(personName)
-    console.log(!isNaN(personAge))
-
     if (isNaN(fivemId) || isNaN(userAge) || isNaN(personAge)) {
         return interaction.reply({ content: "Você deve fornecer um valor numérico nos campos de ID, sua idade e idade do personagem!", ephemeral: true })
     }
+
+    const lowerAgeEmbed = new EmbedBuilder()
+        .setColor(client.themes.default)
+        .setTitle("Você não possui idade o suficiente!")
+        .setDescription("Para jogar na Hope, você precisa ter no minimo 16 anos... Que tal tentar novamente daqui a alguns anos?")
+        .setThumbnail("https://media.discordapp.net/attachments/1096650303526420551/1096650355997163520/Logo_Hope_2.0_-_Fundo_Preto.png?width=1024&height=1024")
+        .setFooter({ iconURL: "https://media.discordapp.net/attachments/1096650303526420551/1096650355997163520/Logo_Hope_2.0_-_Fundo_Preto.png?width=1024&height=1024", text: "Hope - GTA RP" })
+
+    if (16 > userAge) return interaction.reply({embeds: [lowerAgeEmbed], ephemeral: true})
 
     if (fivemId && fivemId > 0) {
         const table = "accounts"
         const column = "whitelist"
         const identifier = "id"
-        
+
         interaction.member.roles.add("811034029674856448")
         interaction.member.roles.remove("811033953288585237")
 
         await mysql.query(`UPDATE ${table} SET ${column} = '1', discord = ${interaction.user.id} WHERE ${identifier} = ?`, [fivemId]).catch(err => console.log(err))
     } else {
         console.log("não foi")
-        interaction.reply({content: "Não foi possivel liberar sua whitelist", ephemeral: true})
+        interaction.reply({ content: "Não foi possivel liberar sua whitelist", ephemeral: true })
     }
 
     moment.tz("America/Sao_Paulo")
@@ -104,10 +107,21 @@ async function CreateWhitelistChannel(client, interaction) {
         .setTitle("Nova whitelist aprovada")
         .setDescription(`Whitelist aprovada às ${moment().format('h:mm:ss a')} \n\n \`\`\`・Usuario: ${interaction.user.username} \n・Idade do usuario: ${userAge} \n・ID do fiveM: ${fivemId} \n・Nome do personagem: ${personName} \n・Idade do personagem: ${personAge} \`\`\``)
         .setFooter({ iconURL: "https://media.discordapp.net/attachments/1096650303526420551/1096650355997163520/Logo_Hope_2.0_-_Fundo_Preto.png?width=1024&height=1024", text: "Hope - GTA RP" });
-        
+
     const logChannel = interaction.guild.channels.cache.find(channel => channel.id == "814383630100463636")
 
-    await logChannel.send({embeds: [logEmbed]})
+    await logChannel.send({ embeds: [logEmbed] })
+
+    const approveEmbed = new EmbedBuilder()
+        .setColor(client.themes.default)
+        .setTitle("Sua whitelist foi aprovada!")
+        .setDescription("Parabens, você ja pode entrar na cidade e criar seu personagem! \n\n Após entrar na cidade e criar seu personagem, atualize seu ID aqui no servidor do discord com o comando \`/atualizarId\`!")
+        .setThumbnail("https://media.discordapp.net/attachments/1096650303526420551/1096650355997163520/Logo_Hope_2.0_-_Fundo_Preto.png?width=1024&height=1024")
+        .setFooter({ iconURL: "https://media.discordapp.net/attachments/1096650303526420551/1096650355997163520/Logo_Hope_2.0_-_Fundo_Preto.png?width=1024&height=1024", text: "Hope - GTA RP" })
+
+    interaction.member.setNickname(personName)
+
+    return interaction.reply({embeds: [approveEmbed], ephemeral: true})
 }
 
 module.exports = {
