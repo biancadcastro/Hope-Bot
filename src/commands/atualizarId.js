@@ -26,6 +26,6 @@ module.exports = {
 
         interaction.member.setNickname(`${ID} | ${interaction.member.nickname}`)
 
-        return interaction.reply({content: "Seu ID foi atualizado com sucesso, tenha uma boa gameplay! Atenciosamente, equipe Hope Royale RP."})
+        return interaction.reply({content: "Seu ID foi atualizado com sucesso, tenha uma boa gameplay! Atenciosamente, equipe Hope Royale RP.", ephemeral: true})
     },
 };
